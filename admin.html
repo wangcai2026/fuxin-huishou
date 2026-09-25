@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>福鑫回收·管理后台（演示）</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",system-ui,sans-serif;}
+body{background:#f6f7f9;padding-bottom:20px;}
+.top{background:linear-gradient(135deg,#ff4d2e,#ff7a3d);color:#fff;padding:16px;position:sticky;top:0;z-index:10;}
+.top h1{font-size:18px;}
+.top p{font-size:12px;opacity:.9;margin-top:2px;}
+.wrap{padding:14px;max-width:600px;margin:0 auto;}
+.card{background:#fff;border-radius:14px;padding:16px;margin-bottom:12px;box-shadow:0 1px 4px #00000010;}
+h2{font-size:15px;color:#ff4d2e;margin-bottom:12px;}
+input{width:100%;border:1.5px solid #eee;border-radius:10px;padding:12px;font-size:16px;margin:6px 0;}
+button{width:100%;border:none;border-radius:10px;padding:13px;font-size:16px;font-weight:600;margin:6px 0;background:linear-gradient(135deg,#ff4d2e,#ff7a3d);color:#fff;cursor:pointer;}
+button.ghost{background:#fff;color:#ff4d2e;border:1.5px solid #ffd2c4;}
+button.small{width:auto;padding:6px 14px;font-size:13px;margin:0;}
+.tabs{display:flex;gap:8px;margin-bottom:12px;}
+.tab{flex:1;text-align:center;padding:10px;background:#fff;border-radius:10px;font-size:14px;color:#666;cursor:pointer;}
+.tab.active{background:#ff4d2e;color:#fff;}
+.row{padding:12px 0;border-bottom:1px solid #f0f0f0;font-size:14px;}
+.row:last-child{border-bottom:none;}
+.row .name{font-weight:600;}
+.row .meta{color:#888;font-size:12px;margin-top:3px;}
+.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;margin-left:6px;}
+.badge.ok{background:#e6f9ee;color:#2ec27e;}
+.badge.pending{background:#fff3e0;color:#ff9800;}
+.redeem-result{padding:12px;border-radius:10px;margin:8px 0;font-size:14px;display:none;}
+.redeem-result.ok{background:#e6f9ee;color:#1a7f4e;display:block;}
+.redeem-result.fail{background:#ffe5e0;color:#c0392b;display:block;}
+.hidden{display:none;}
+.demo-banner{background:#fff3e0;color:#e65100;padding:10px 14px;font-size:12px;text-align:center;}
+</style>
+</head>
+<body>
+<div class="demo-banner">演示数据 · 真实版上线后这里就是客户提交的真实记录</div>
+<div class="top"><h1>福鑫回收·管理后台</h1><p>礼品核销 / 估价查看</p></div>
+
+<div class="wrap">
+  <div class="tabs">
+    <div class="tab active" onclick="showTab('gift',this)">礼品核销</div>
+    <div class="tab" onclick="showTab('est',this)">估价单 <span id="estCount">(2)</span></div>
+  </div>
+
+  <div id="giftTab">
+    <div class="card">
+      <h2>输入核销码核销</h2>
+      <input type="text" id="redeemCode" placeholder="输入6位核销码" inputmode="numeric">
+      <button onclick="redeem()">核销</button>
+      <div class="redeem-result" id="redeemResult"></div>
+    </div>
+    <div class="card">
+      <h2>今日申领记录（演示）</h2>
+      <div id="giftList"></div>
+    </div>
+  </div>
+
+  <div id="estTab" class="hidden">
+    <div class="card">
+      <h2>客户估价单（演示）</h2>
+      <div id="estList"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+var gifts = [
+  {id:3,name:'王师傅',phone:'13907108888',user_type:'外卖员',code:'582719',redeemed:1,created_at:'2026-09-26 09:12'},
+  {id:2,name:'李姐',phone:'13871234567',user_type:'上班族',code:'308670',redeemed:0,created_at:'2026-09-26 10:35'},
+  {id:1,name:'小张',phone:'13409876543',user_type:'工厂工人',code:'916234',redeemed:0,created_at:'2026-09-26 11:08'}
+];
+var estimates = [
+  {id:3,goods_type:'手机',description:'iPhone 14 128G，成色9新，无拆修',phone:'13871234567',status:'pending',created_at:'2026-09-26 10:40'},
+  {id:2,goods_type:'黄金首饰',description:'一条项链约20克，有发票',phone:'13409876543',status:'pending',created_at:'2026-09-26 11:15'},
+  {id:1,goods_type:'电动车',description:'雅迪用了一年，能跑40公里',phone:'13907108888',status:'contacted',created_at:'2026-09-26 09:20'}
+];
+
+function showTab(t, el){
+  document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')});
+  el.classList.add('active');
+  document.getElementById('giftTab').classList.toggle('hidden', t!=='gift');
+  document.getElementById('estTab').classList.toggle('hidden', t!=='est');
+}
+function renderGifts(){
+  document.getElementById('giftList').innerHTML = gifts.map(function(g){
+    return '<div class="row"><div class="name">'+g.name+' <span class="badge '+(g.redeemed?'ok':'pending')+'">'+(g.redeemed?'已核销':'未核销')+'</span></div><div class="meta">'+g.phone+' · '+g.user_type+' · 码'+g.code+' · '+g.created_at+'</div></div>';
+  }).join('');
+}
+function renderEst(){
+  document.getElementById('estList').innerHTML = estimates.map(function(e){
+    return '<div class="row"><div class="name">'+e.goods_type+' <span class="badge '+(e.status==='pending'?'pending':'ok')+'">'+(e.status==='pending'?'待联系':'已联系')+'</span></div><div class="meta">'+e.description+'</div><div class="meta">📞 '+e.phone+' · '+e.created_at+'</div>'+(e.status==='pending'?'<div style="margin-top:8px"><button class="small ghost" onclick="markDone('+e.id+')">已电话联系</button></div>':'')+'</div>';
+  }).join('');
+  var pending = estimates.filter(function(e){return e.status==='pending'}).length;
+  document.getElementById('estCount').textContent = '('+pending+')';
+}
+function redeem(){
+  var code = document.getElementById('redeemCode').value.trim();
+  var box = document.getElementById('redeemResult');
+  var g = gifts.find(function(x){return x.code===code});
+  if(!g){box.className='redeem-result fail';box.textContent='❌ 核销码不存在';return}
+  if(g.redeemed){box.className='redeem-result fail';box.textContent='❌ 该码今天已核销过';return}
+  g.redeemed=1;
+  box.className='redeem-result ok';
+  box.textContent='✅ 核销成功：'+g.name+'（'+g.phone.slice(0,3)+'****'+g.phone.slice(7)+'）';
+  document.getElementById('redeemCode').value='';
+  renderGifts();
+}
+function markDone(id){
+  var e = estimates.find(function(x){return x.id===id});
+  if(e) e.status='contacted';
+  renderEst();
+}
+renderGifts(); renderEst();
+</script>
+</body>
+</html>
