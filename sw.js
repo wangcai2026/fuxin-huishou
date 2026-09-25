@@ -1,4 +1,4 @@
-const CACHE = 'fuxin-pwa-v6';
+const CACHE = 'fuxin-pwa-v7';
 const ASSETS = [
   './',
   './index.html',
