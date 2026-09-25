@@ -1,6 +1,6 @@
 {
-  "name": "福鑫寄卖行",
-  "short_name": "福鑫寄卖",
+  "name": "福鑫回收寄卖",
+  "short_name": "福鑫回收",
   "description": "闲置变现·寄存保管·黄金数码回收·押车",
   "start_url": "./index.html",
   "scope": "./",
