@@ -228,30 +228,6 @@
 
   <div class="card">
     <div class="card-head">
-      <div class="icon icon-purple">
-        <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-      </div>
-      <h3>我的寄存物品</h3>
-    </div>
-    <p class="tip" style="margin-top:0">办理寄存后，在这里查看物品、到期时间、赎回价与到期提醒</p>
-    <button class="btn btn-ghost" onclick="toast('寄存台账即将上线')">登录查看台账</button>
-  </div>
-
-  <div class="card">
-    <div class="card-head">
-      <div class="icon icon-green">
-        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-      </div>
-      <h3>周边招工/兼职</h3>
-    </div>
-    <div class="job"><span class="dot"></span>外卖站点直招，包住宿，单价高</div>
-    <div class="job"><span class="dot"></span>梁山头工厂普工，月结工资</div>
-    <div class="job"><span class="dot"></span>网约车司机长期招募</div>
-    <p class="tip">信息仅供参考，应聘请自行核实资质</p>
-  </div>
-
-  <div class="card">
-    <div class="card-head">
       <div class="icon icon-red">
         <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
       </div>
@@ -270,7 +246,7 @@
   <div class="modal">
     <h3>添加到手机桌面</h3>
     <p style="margin:14px 0;color:var(--text-sub);font-size:14px;line-height:1.7">
-      把福鑫寄卖行存到桌面，像 App 一样一键打开，随时查金价、估价、看寄存到期。
+      把福鑫寄卖行存到桌面，像 App 一样一键打开，随时查金价、估价、联系我们。
     </p>
     <p style="font-size:12.5px;color:var(--text-sub);line-height:1.7">
       安卓 Chrome：浏览器菜单 → 添加到主屏幕 / 安装应用<br>
@@ -287,17 +263,9 @@
     <span class="nav-ico"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
     首页
   </div>
-  <div class="nav-item" data-nav="寄存">
-    <span class="nav-ico"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>
-    寄存
-  </div>
   <div class="nav-center" onclick="scrollToEstimate()">
     <div class="fab"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
     <div class="lab">估价</div>
-  </div>
-  <div class="nav-item" data-nav="招工">
-    <span class="nav-ico"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
-    招工
   </div>
   <div class="nav-item" data-nav="我的">
     <span class="nav-ico"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
@@ -325,8 +293,6 @@ document.querySelectorAll('.nav-item').forEach(function(el){
     el.classList.add('active');
     var name=el.getAttribute('data-nav');
     if(name==='首页'){window.scrollTo({top:0,behavior:'smooth'});}
-    else if(name==='寄存'){document.querySelectorAll('.card')[3].scrollIntoView({behavior:'smooth',block:'center'});}
-    else if(name==='招工'){document.querySelectorAll('.card')[4].scrollIntoView({behavior:'smooth',block:'center'});}
     else{toast('「我的」页面即将上线');}
   });
 });
